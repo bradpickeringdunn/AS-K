@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ASnKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Events">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="UTCOffSet" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_RegisteredEvents">
+          <Key>
+            <PropertyRef Name="RegisteredEventId" />
+          </Key>
+          <Property Name="RegisteredEventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ArivalDate" Type="date" Nullable="false" />
+          <Property Name="ArivalTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_RegisteredEvents_ToTable">
+          <End Role="tbl_Events" Type="Self.tbl_Events" Multiplicity="1" />
+          <End Role="tbl_RegisteredEvents" Type="Self.tbl_RegisteredEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Events">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="tbl_RegisteredEvents">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASnKModelStoreContainer">
+          <EntitySet Name="tbl_Events" EntityType="Self.tbl_Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_RegisteredEvents" EntityType="Self.tbl_RegisteredEvents" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_RegisteredEvents_ToTable" Association="Self.FK_tbl_RegisteredEvents_ToTable">
+            <End Role="tbl_Events" EntitySet="tbl_Events" />
+            <End Role="tbl_RegisteredEvents" EntitySet="tbl_RegisteredEvents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASnKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_Events">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="UTCOffSet" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_RegisteredEvents" Relationship="Self.FK_tbl_RegisteredEvents_ToTable" FromRole="tbl_Events" ToRole="tbl_RegisteredEvents" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="tbl_RegisteredEvents">
+          <Key>
+            <PropertyRef Name="RegisteredEventId" />
+          </Key>
+          <Property Name="RegisteredEventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ArivalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ArivalTime" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="tbl_Events" Relationship="Self.FK_tbl_RegisteredEvents_ToTable" FromRole="tbl_RegisteredEvents" ToRole="tbl_Events" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="FK_tbl_RegisteredEvents_ToTable">
+          <End Role="tbl_Events" Type="Self.tbl_Events" Multiplicity="1" />
+          <End Role="tbl_RegisteredEvents" Type="Self.tbl_RegisteredEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Events">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="tbl_RegisteredEvents">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ASnKContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Events" EntityType="Self.tbl_Events" />
+          <EntitySet Name="tbl_RegisteredEvents" EntityType="Self.tbl_RegisteredEvents" />
+          <AssociationSet Name="FK_tbl_RegisteredEvents_ToTable" Association="Self.FK_tbl_RegisteredEvents_ToTable">
+            <End Role="tbl_Events" EntitySet="tbl_Events" />
+            <End Role="tbl_RegisteredEvents" EntitySet="tbl_RegisteredEvents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASnKModelStoreContainer" CdmEntityContainer="ASnKContext">
+          <EntitySetMapping Name="tbl_Events">
+            <EntityTypeMapping TypeName="ASnKModel.tbl_Events">
+              <MappingFragment StoreEntitySet="tbl_Events">
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="UTCOffSet" ColumnName="UTCOffSet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_RegisteredEvents">
+            <EntityTypeMapping TypeName="ASnKModel.tbl_RegisteredEvents">
+              <MappingFragment StoreEntitySet="tbl_RegisteredEvents">
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="RegisteredEventId" ColumnName="RegisteredEventId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ArivalDate" ColumnName="ArivalDate" />
+                <ScalarProperty Name="ArivalTime" ColumnName="ArivalTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
